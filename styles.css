@@ -920,6 +920,10 @@ html[lang="th"] .cmp tbody th { white-space: normal; }
   25%, 100% { background: transparent; border-color: var(--border-subtle); color: var(--text-faint); }
 }
 
+.flow-more { max-width: 1000px; margin: 28px auto 0; text-align: center; }
+/* A long label must wrap on a phone instead of widening the page. */
+.flow-more .btn { max-width: 100%; white-space: normal; text-align: center; line-height: 1.35; }
+
 /* ---------- CTA ---------- */
 .cta {
   display: grid;

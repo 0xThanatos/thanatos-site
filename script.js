@@ -150,11 +150,14 @@ const i18n = (() => {
       el.setAttribute("aria-label", pick(el.dataset.i18nAria, remember(el, "aria", el.getAttribute("aria-label") || "")));
     });
 
+    // Each page names its own title/description keys (`<html data-i18n-meta>`);
+    // the landing page uses "meta".
+    const metaKey = document.documentElement.dataset.i18nMeta || "meta";
     const meta = document.querySelector('meta[name="description"]');
     if (!originalTitle) originalTitle = document.title;
     if (meta && !originalDescription) originalDescription = meta.getAttribute("content");
-    document.title = pick("meta.title", originalTitle);
-    if (meta) meta.setAttribute("content", pick("meta.description", originalDescription));
+    document.title = pick(`${metaKey}.title`, originalTitle);
+    if (meta) meta.setAttribute("content", pick(`${metaKey}.description`, originalDescription));
 
     document.documentElement.lang = lang;
     document.querySelectorAll(".lang-switch [data-lang]").forEach((btn) => {

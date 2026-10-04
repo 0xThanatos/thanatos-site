@@ -1,0 +1,348 @@
+/* =========================================================
+   kernel.html — the 1.10 Workflow Kernel page. Layout, nav,
+   bento and reveal come from styles.css; this file adds the
+   interactive lifecycle diagram and the small loop chips.
+   Every animation is off under prefers-reduced-motion, and
+   the page reads fully without JS (all panels are shown).
+   ========================================================= */
+
+:root {
+  --k-step: 4200ms;
+  /* Who acts at a stage. Each is ≥ 7:1 on --bg-elevated. */
+  --k-you: var(--accent-soft);
+  --k-host: #9ec1ff;
+  --k-agent: #cdb4ff;
+}
+
+.k-hero .hero-inner { padding-bottom: 56px; }
+@media (min-width: 768px) { .k-hero .hero-inner { padding-bottom: 88px; } }
+
+.k-cell { padding-block: 40px 48px; }
+@media (min-width: 900px) { .k-cell { padding-block: 64px; } }
+.k-diagram { max-width: 1104px; margin: 0 auto; }
+
+/* ---------- Who acts ---------- */
+.k-actor {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  font-family: var(--font-code);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+.k-you { color: var(--k-you); }
+.k-host { color: var(--k-host); }
+.k-agent { color: var(--k-agent); }
+html[lang="th"] .k-actor { letter-spacing: 0.02em; }
+
+/* ---------- Track: a column on phones, a row from 1000px ---------- */
+.k-track { display: grid; grid-template-columns: 1fr; }
+.k-node {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "icon name" "icon sub";
+  align-items: center;
+  column-gap: 14px;
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  background: linear-gradient(180deg, var(--bg-elevated), #0b0a12);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  transition: border-color var(--dur-enter), box-shadow var(--dur-enter), transform var(--dur-hover);
+}
+.k-node .k-actor { position: absolute; top: -9px; right: 14px; background: var(--bg); }
+.k-icon {
+  grid-area: icon;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg);
+  color: var(--text-dim);
+  transition: color var(--dur-enter), border-color var(--dur-enter);
+}
+.k-icon svg, .k-store-label svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.k-name { grid-area: name; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+.k-sub { grid-area: sub; font-size: 13px; color: var(--text-dim); }
+.k-node:hover { border-color: var(--text-faint); }
+.k-node.is-done { border-color: rgb(var(--accent-rgb) / 0.35); }
+.k-node.is-done .k-icon { color: var(--accent-soft); }
+.k-node.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgb(var(--accent-rgb) / 0.15), 0 16px 40px rgb(0 0 0 / 0.45);
+}
+.k-node.is-active .k-icon { color: var(--accent); border-color: rgb(var(--accent-rgb) / 0.5); }
+
+.k-wire {
+  position: relative;
+  justify-self: start;
+  width: 2px;
+  height: 26px;
+  margin-left: 36px;
+  background: var(--border-subtle);
+  transition: background var(--dur-enter);
+}
+.k-wire.is-done { background: rgb(var(--accent-rgb) / 0.55); }
+.k-packet {
+  position: absolute;
+  left: -3px;
+  top: -4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgb(var(--accent-rgb) / 0.9);
+  opacity: 0;
+}
+/* The packet leaves in the last third of a stage, so it arrives as the next
+   stage lights up. */
+.is-playing .k-wire.is-flowing .k-packet { animation: k-flow-y var(--k-step) linear both; }
+@keyframes k-flow-y {
+  0%, 66% { opacity: 0; transform: translateY(0); }
+  68% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 1; transform: translateY(26px); }
+}
+
+@media (min-width: 1000px) {
+  .k-track { grid-template-columns: repeat(5, minmax(0, 1fr) 28px) minmax(0, 1fr); align-items: stretch; }
+  .k-node {
+    grid-template-columns: 1fr;
+    grid-template-areas: "icon" "name" "sub";
+    justify-items: center;
+    row-gap: 2px;
+    padding: 26px 10px 18px;
+    text-align: center;
+  }
+  .k-node .k-actor { right: auto; left: 50%; transform: translateX(-50%); }
+  .k-icon { margin-bottom: 10px; }
+  .k-wire { align-self: center; justify-self: stretch; width: auto; height: 2px; margin: 0; }
+  .k-packet { left: -4px; top: -3px; }
+  .is-playing .k-wire.is-flowing .k-packet { animation-name: k-flow-x; }
+  @keyframes k-flow-x {
+    0%, 66% { opacity: 0; transform: translateX(0); }
+    68% { opacity: 1; transform: translateX(0); }
+    100% { opacity: 1; transform: translateX(28px); }
+  }
+}
+
+/* ---------- Store: which tables the active stage writes ---------- */
+.k-store {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+  padding: 12px 14px;
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+}
+.k-store-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 6px;
+  font-family: var(--font-code);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.k-store-label svg { width: 18px; height: 18px; }
+.k-table {
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-code);
+  font-size: 12px;
+  color: var(--text-faint);
+  transition: color var(--dur-enter), border-color var(--dur-enter), background var(--dur-enter);
+}
+.k-table.is-writing {
+  color: var(--accent-soft);
+  border-color: var(--accent);
+  background: var(--accent-tint);
+}
+
+/* ---------- Detail panel ---------- */
+.k-panels {
+  margin-top: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+}
+.k-panel { padding: 24px 22px 26px; }
+.k-panel[hidden] { display: none; }
+.k-panel h3 { margin: 0 0 18px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; }
+.k-panel dl { display: grid; gap: 18px; margin: 0; }
+.k-panel dt {
+  margin-bottom: 6px;
+  font-family: var(--font-code);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.k-panel dd { margin: 0; color: var(--text-dim); font-size: 15px; line-height: 1.6; text-wrap: pretty; }
+html[lang="th"] .k-panel dt { letter-spacing: 0.03em; }
+html[lang="th"] .k-panel h3 { line-height: 1.4; }
+@media (min-width: 900px) {
+  .k-panel { padding: 32px 36px 36px; }
+  .k-panel dl { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+}
+.js .k-panel:not([hidden]) { animation: k-panel-in var(--dur-enter) var(--ease-out-expo); }
+@keyframes k-panel-in { from { opacity: 0; transform: translateY(6px); } }
+
+/* Without JS every stage is readable, one after another. */
+html:not(.js) .k-panel[hidden] { display: block; border-top: 1px solid var(--border); }
+html:not(.js) .k-controls { display: none; }
+
+/* ---------- Play / pause and the stage timer ---------- */
+.k-controls { display: flex; align-items: center; gap: 14px; margin-top: 16px; }
+.k-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: rgb(255 255 255 / 0.03);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color var(--dur-hover), background var(--dur-hover);
+}
+.k-play:hover { border-color: var(--text-faint); background: rgb(255 255 255 / 0.06); }
+.k-play-icon { width: 10px; height: 10px; border-inline: 3px solid currentColor; }
+.k-play[aria-pressed="false"] .k-play-icon {
+  width: 0;
+  height: 0;
+  border-block: 5px solid transparent;
+  border-inline: 0;
+  border-left: 9px solid currentColor;
+}
+.k-progress { flex: 1; height: 2px; border-radius: 2px; background: var(--border-subtle); overflow: hidden; }
+.k-progress i { display: block; width: 100%; height: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; }
+.is-playing .k-progress i { animation: k-progress var(--k-step) linear both; }
+@keyframes k-progress { to { transform: scaleX(1); } }
+
+/* ---------- Who owns what ---------- */
+.k-own { grid-template-columns: 1fr; }
+@media (min-width: 900px) { .k-own { grid-template-columns: repeat(3, 1fr); } }
+.k-own .k-actor { margin-bottom: 16px; }
+.k-own ul { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.k-own li { position: relative; padding-left: 18px; color: var(--text-dim); font-size: 15px; line-height: 1.5; }
+.k-own li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 6px; height: 6px; border-radius: 50%; background: var(--border-subtle); }
+
+/* ---------- Around the loop ---------- */
+.k-around, .k-files { grid-template-columns: 1fr; }
+@media (min-width: 768px) { .k-around, .k-files { grid-template-columns: repeat(2, 1fr); } }
+.k-mini {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 0;
+  margin: 20px 0 14px;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-code);
+  font-size: 12px;
+}
+.k-mini li {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-dim);
+  animation: k-mini-on calc(var(--k-n) * 1.5s) linear infinite;
+}
+.k-mini li + li { margin-left: 22px; position: relative; }
+.k-mini li + li::before { content: ""; position: absolute; left: -17px; top: 50%; width: 12px; height: 1px; background: var(--border-subtle); }
+.k-mini li:nth-child(2) { animation-delay: 1.5s; }
+.k-mini li:nth-child(3) { animation-delay: 3s; }
+.k-mini li:nth-child(4) { animation-delay: 4.5s; }
+.k-mini li:nth-child(5) { animation-delay: 6s; }
+/* Each chip is lit for one slot of its loop: 1/4 or 1/5 of the cycle. */
+@keyframes k-mini-on {
+  0%, 19% { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+  20%, 100% { color: var(--text-dim); background: transparent; border-color: var(--border-subtle); }
+}
+.k-note { margin-top: 0; font-size: 13.5px !important; color: var(--text-faint) !important; }
+.k-files h3 code { font-size: 15px; }
+
+/* ---------- Benchmark bar chart ---------- */
+.bm { max-width: 960px; margin: 0 auto; position: relative; }
+.bm-sample {
+  margin: 0 0 20px;
+  padding: 8px 14px;
+  border: 1px dashed var(--warn);
+  border-radius: var(--radius-md);
+  color: var(--warn);
+  font-family: var(--font-code);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+}
+html[lang="th"] .bm-sample { letter-spacing: 0.02em; }
+.bm-chart { display: grid; gap: 16px; }
+.bm-metric {
+  padding: 22px 22px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+}
+@media (min-width: 900px) { .bm-metric { padding: 28px 32px 26px; } }
+.bm-metric h3 { margin: 0 0 4px; font-size: 18px; font-weight: 600; letter-spacing: -0.015em; }
+.bm-note { margin: 0 0 18px; color: var(--text-faint); font-size: 13.5px; }
+.bm-rows { display: grid; gap: 10px; }
+.bm-row { display: grid; grid-template-columns: 1fr; gap: 4px 14px; align-items: center; }
+@media (min-width: 640px) { .bm-row { grid-template-columns: 150px 1fr 56px; } }
+.bm-tool { font-size: 14px; color: var(--text-dim); }
+.bm-row.is-us .bm-tool { color: var(--text); font-weight: 600; }
+.bm-track { height: 14px; border-radius: 999px; background: var(--bg-elevated); overflow: hidden; }
+.bm-bar {
+  display: block;
+  height: 100%;
+  width: calc(var(--bm-value) * 1%);
+  border-radius: 999px;
+  background: var(--border-subtle);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 900ms var(--ease-out-expo);
+}
+.bm-row.is-us .bm-bar { background: var(--accent); }
+.bm-chart.is-in .bm-bar { transform: scaleX(1); }
+.bm-row:nth-child(2) .bm-bar { transition-delay: 90ms; }
+.bm-row:nth-child(3) .bm-bar { transition-delay: 180ms; }
+.bm-value { font-family: var(--font-code); font-size: 14px; color: var(--text); }
+@media (min-width: 640px) { .bm-value { text-align: right; } }
+.bm-delta { margin: 16px 0 0; font-family: var(--font-code); font-size: 13px; color: var(--text-dim); }
+.bm-delta.is-better { color: var(--ok); }
+.bm-delta.is-worse { color: var(--err); }
+.bm-meta { margin: 18px 0 0; color: var(--text-faint); font-size: 13px; }
+.bm-meta a { color: var(--accent-text); }
+
+@media (prefers-reduced-motion: reduce) {
+  .bm-bar { transition: none; transform: none; }
+  .k-packet, .k-progress i, .k-mini li, .js .k-panel:not([hidden]) { animation: none !important; }
+  .k-node, .k-wire, .k-table { transition: none; }
+}

@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en" data-i18n-meta="kernel.meta">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>THANATOS 1.10 — Workflow Kernel</title>
+  <meta name="description" content="How the THANATOS 1.10 Workflow Kernel works: the host owns the workflow, the agent does the work, and nothing is done until there is evidence.">
+  <meta property="og:title" content="THANATOS 1.10 — Workflow Kernel">
+  <meta property="og:description" content="The host owns the workflow. The agent does the work.">
+  <meta property="og:image" content="assets/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/tokens.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="kernel.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+
+  <nav id="site-nav" aria-label="Primary">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html"><span class="nav-mark" aria-hidden="true">›</span>THANATOS</a>
+      <div class="nav-links">
+        <a href="index.html#why-not-cli" data-i18n="nav.why">Why</a>
+        <a href="index.html#features" data-i18n="nav.features">Features</a>
+        <a href="index.html#compare" data-i18n="nav.compare">Compare</a>
+        <a href="index.html#architecture" data-i18n="nav.arch">Architecture</a>
+        <a href="kernel.html" class="nav-active" aria-current="page" data-i18n="nav.kernel">Kernel</a>
+      </div>
+      <div class="lang-switch" role="group" aria-label="Language" data-i18n-aria="lang.label">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="th" aria-pressed="false">TH</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="frame">
+
+    <section id="kernel-hero" class="hero k-hero">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <p class="hero-eyebrow"><span class="pulse-dot" aria-hidden="true"></span><span data-i18n="kernel.hero.eyebrow">THANATOS 1.10 · Workflow Kernel</span></p>
+        <h1 class="hero-title" data-i18n-aria="kernel.hero.aria" aria-label="The agent does the work. The host owns the workflow, the contract, the evidence, and the verdict.">
+          <span aria-hidden="true"><span data-i18n-html="kernel.hero.lead">The agent does the work.<br>The host owns the </span><span class="type-word" data-i18n-words="kernel.hero.words" data-words="workflow.|contract.|evidence.|verdict.">workflow.</span><span class="type-caret"></span></span>
+        </h1>
+        <p class="hero-sub" data-i18n="kernel.hero.sub">In 1.10 every task becomes a Mission with a written contract. The app, not the agent, decides what phase the work is in, what counts as proof, and when it is done.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#lifecycle" data-i18n="kernel.hero.cta1">Watch a Mission run</a>
+          <a class="btn btn-ghost" href="#around" data-i18n="kernel.hero.cta2">What else is new</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="lifecycle">
+      <header class="section-head">
+        <div>
+          <p class="section-eyebrow reveal" data-i18n="kernel.life.eyebrow">Mission lifecycle</p>
+          <h2 class="section-title reveal" data-i18n="kernel.life.title">From a sentence to a verified result.</h2>
+        </div>
+        <p class="section-desc reveal" data-i18n="kernel.life.desc">Six stages. Select one to stop the loop and read what happens there.</p>
+      </header>
+
+      <div class="flow-cell k-cell">
+        <div class="k-diagram" data-kernel-diagram>
+          <div class="k-track" role="tablist" aria-label="Mission lifecycle stages" data-i18n-aria="kernel.life.aria">
+            <button type="button" class="k-node is-active" role="tab" id="k-tab-0" aria-controls="k-panel-0" aria-selected="true" data-writes="missions contracts events">
+              <span class="k-actor k-you" data-i18n="kernel.actor.you">You</span>
+              <span class="k-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5h16v10.5H10l-4.5 3.5V16H4z"/></svg></span>
+              <span class="k-name" data-i18n="kernel.s1.name">Intake</span>
+              <span class="k-sub" data-i18n="kernel.s1.sub">State the goal</span>
+            </button>
+            <span class="k-wire" aria-hidden="true"><span class="k-packet"></span></span>
+            <button type="button" class="k-node" role="tab" id="k-tab-1" aria-controls="k-panel-1" aria-selected="false" tabindex="-1" data-writes="routes events">
+              <span class="k-actor k-host" data-i18n="kernel.actor.host">Host</span>
+              <span class="k-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19V9l7-5 7 5v10"/><path d="M12 4v15M5 13h14"/></svg></span>
+              <span class="k-name" data-i18n="kernel.s2.name">Route</span>
+              <span class="k-sub" data-i18n="kernel.s2.sub">Pick a playbook</span>
+            </button>
+            <span class="k-wire" aria-hidden="true"><span class="k-packet"></span></span>
+            <button type="button" class="k-node" role="tab" id="k-tab-2" aria-controls="k-panel-2" aria-selected="false" tabindex="-1" data-writes="contracts events">
+              <span class="k-actor k-host" data-i18n="kernel.actor.host">Host</span>
+              <span class="k-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.5h8l4 4V20.5H7z"/><path d="M15 3.5v4h4M10 12h6M10 15.5h6"/></svg></span>
+              <span class="k-name" data-i18n="kernel.s3.name">Contract</span>
+              <span class="k-sub" data-i18n="kernel.s3.sub">Phases and principles</span>
+            </button>
+            <span class="k-wire" aria-hidden="true"><span class="k-packet"></span></span>
+            <button type="button" class="k-node" role="tab" id="k-tab-3" aria-controls="k-panel-3" aria-selected="false" tabindex="-1" data-writes="runs events">
+              <span class="k-actor k-agent" data-i18n="kernel.actor.agent">Agent</span>
+              <span class="k-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="6.5" r="2.5"/><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M12 9v3.5M12 12.5l-5 3M12 12.5l5 3"/></svg></span>
+              <span class="k-name" data-i18n="kernel.s4.name">Execute</span>
+              <span class="k-sub" data-i18n="kernel.s4.sub">Agents do the work</span>
+            </button>
+            <span class="k-wire" aria-hidden="true"><span class="k-packet"></span></span>
+            <button type="button" class="k-node" role="tab" id="k-tab-4" aria-controls="k-panel-4" aria-selected="false" tabindex="-1" data-writes="evidence">
+              <span class="k-actor k-host" data-i18n="kernel.actor.host">Host</span>
+              <span class="k-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.5-3 8-7.5 9.5-4.5-1.500-7.500-5-7.500-9.500V6z"/><path d="M8.500 12l2.500 2.500 4.500-5"/></svg></span>
+              <span class="k-name" data-i18n="kernel.s5.name">Evidence</span>
+              <span class="k-sub" data-i18n="kernel.s5.sub">Run the checks</span>
+            </button>
+            <span class="k-wire" aria-hidden="true"><span class="k-packet"></span></span>
+            <button type="button" class="k-node" role="tab" id="k-tab-5" aria-controls="k-panel-5" aria-selected="false" tabindex="-1" data-writes="missions events">
+              <span class="k-actor k-host" data-i18n="kernel.actor.host">Host</span>
+              <span class="k-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.500"/><path d="M8 12.500l2.800 2.800L16.200 9.500"/></svg></span>
+              <span class="k-name" data-i18n="kernel.s6.name">Verdict</span>
+              <span class="k-sub" data-i18n="kernel.s6.sub">Done, or not yet</span>
+            </button>
+          </div>
+
+          <div class="k-store" aria-hidden="true">
+            <span class="k-store-label"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7.500" ry="3"/><path d="M4.500 6v6c0 1.700 3.400 3 7.500 3s7.500-1.300 7.500-3V6M4.500 12v6c0 1.700 3.400 3 7.500 3s7.500-1.300 7.500-3v-6"/></svg>SQLite</span>
+            <span class="k-table" data-table="missions">missions</span>
+            <span class="k-table" data-table="contracts">contract revisions</span>
+            <span class="k-table" data-table="routes">route decisions</span>
+            <span class="k-table" data-table="runs">agent runs</span>
+            <span class="k-table" data-table="evidence">evidence</span>
+            <span class="k-table" data-table="events">events</span>
+          </div>
+
+          <div class="k-panels">
+            <div class="k-panel" role="tabpanel" id="k-panel-0" aria-labelledby="k-tab-0" tabindex="0">
+              <h3 data-i18n="kernel.s1.title">You say what you want. A Mission is created.</h3>
+              <dl>
+                <div><dt data-i18n="kernel.k.what">What happens</dt><dd data-i18n="kernel.s1.what">Your goal becomes a Mission attached to the chat, in the state "intake", with contract revision 1.</dd></div>
+                <div><dt data-i18n="kernel.k.who">Who decides</dt><dd data-i18n="kernel.s1.who">You. The agent cannot create or close a Mission by saying so.</dd></div>
+                <div><dt data-i18n="kernel.k.kept">What is kept</dt><dd data-i18n="kernel.s1.kept">The Mission, its first contract revision, and an event for each change — replayed after a restart.</dd></div>
+              </dl>
+            </div>
+            <div class="k-panel" role="tabpanel" id="k-panel-1" aria-labelledby="k-tab-1" tabindex="0" hidden>
+              <h3 data-i18n="kernel.s2.title">The host routes the work to a playbook.</h3>
+              <dl>
+                <div><dt data-i18n="kernel.k.what">What happens</dt><dd data-i18n="kernel.s2.what">Fixed rules match the goal to one of 20 playbooks: bug fix, feature, investigation, refactoring and more. An unclear goal gets the safe one, Investigation.</dd></div>
+                <div><dt data-i18n="kernel.k.who">Who decides</dt><dd data-i18n="kernel.s2.who">The rules, and then you: Change route stays available until the work starts. A route that costs more or reaches further asks you first.</dd></div>
+                <div><dt data-i18n="kernel.k.kept">What is kept</dt><dd data-i18n="kernel.s2.kept">The decision, its reasons, and any override you made.</dd></div>
+              </dl>
+            </div>
+            <div class="k-panel" role="tabpanel" id="k-panel-2" aria-labelledby="k-tab-2" tabindex="0" hidden>
+              <h3 data-i18n="kernel.s3.title">The route becomes a written contract.</h3>
+              <dl>
+                <div><dt data-i18n="kernel.k.what">What happens</dt><dd data-i18n="kernel.s3.what">The playbook's phases and the engineering principles that fit this task are written into a new contract revision. The agent is given only the instructions for the current phase.</dd></div>
+                <div><dt data-i18n="kernel.k.who">Who decides</dt><dd data-i18n="kernel.s3.who">The host. A revision is never edited; a change is a new revision with a reason.</dd></div>
+                <div><dt data-i18n="kernel.k.kept">What is kept</dt><dd data-i18n="kernel.s3.kept">Every revision, in order. Open the Contract button on the Mission bar to read it.</dd></div>
+              </dl>
+            </div>
+            <div class="k-panel" role="tabpanel" id="k-panel-3" aria-labelledby="k-tab-3" tabindex="0" hidden>
+              <h3 data-i18n="kernel.s4.title">Agents do the work, inside the contract.</h3>
+              <dl>
+                <div><dt data-i18n="kernel.k.what">What happens</dt><dd data-i18n="kernel.s4.what">One agent, or a team shape you start yourself: Independent Verifier, Architect Panel, Arena, or Interrogate.</dd></div>
+                <div><dt data-i18n="kernel.k.who">Who decides</dt><dd data-i18n="kernel.s4.who">The agent decides how. The host decides who may write: one writer per file, and reviewers are read-only and never see the author's reasoning.</dd></div>
+                <div><dt data-i18n="kernel.k.kept">What is kept</dt><dd data-i18n="kernel.s4.kept">Each run with its participants and results — including the ones that failed or timed out.</dd></div>
+              </dl>
+            </div>
+            <div class="k-panel" role="tabpanel" id="k-panel-4" aria-labelledby="k-tab-4" tabindex="0" hidden>
+              <h3 data-i18n="kernel.s5.title">The host runs the checks and records the result.</h3>
+              <dl>
+                <div><dt data-i18n="kernel.k.what">What happens</dt><dd data-i18n="kernel.s5.what">Each claim the Mission must prove is tied to a check from the project's Verification Profile — your tests, lint, build. The host runs it and stores the outcome.</dd></div>
+                <div><dt data-i18n="kernel.k.who">Who decides</dt><dd data-i18n="kernel.s5.who">The result of the command. An agent can run commands but cannot record evidence, and "it passed" in chat is not a result.</dd></div>
+                <div><dt data-i18n="kernel.k.kept">What is kept</dt><dd data-i18n="kernel.s5.kept">Every attempt, never rewritten. Edit the code after a pass and that evidence turns stale.</dd></div>
+              </dl>
+            </div>
+            <div class="k-panel" role="tabpanel" id="k-panel-5" aria-labelledby="k-tab-5" tabindex="0" hidden>
+              <h3 data-i18n="kernel.s6.title">Done means every required claim has fresh evidence.</h3>
+              <dl>
+                <div><dt data-i18n="kernel.k.what">What happens</dt><dd data-i18n="kernel.s6.what">The Mission can only move to "completed" when nothing required is failed, stale, or missing. Otherwise the Evidence panel lists exactly what blocks it.</dd></div>
+                <div><dt data-i18n="kernel.k.who">Who decides</dt><dd data-i18n="kernel.s6.who">The host, from the ledger. You can waive a claim, with a reason that stays on record.</dd></div>
+                <div><dt data-i18n="kernel.k.kept">What is kept</dt><dd data-i18n="kernel.s6.kept">The final state, the waivers, and the trail that led there.</dd></div>
+              </dl>
+            </div>
+          </div>
+
+          <div class="k-controls">
+            <button type="button" class="k-play" data-kernel-play aria-pressed="true">
+              <span class="k-play-icon" aria-hidden="true"></span>
+              <span data-kernel-play-label data-pause="Pause" data-play="Play" data-i18n-pause="kernel.life.pause" data-i18n-play="kernel.life.play">Pause</span>
+            </button>
+            <span class="k-progress" aria-hidden="true"><i></i></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="owners">
+      <header class="section-head">
+        <div>
+          <p class="section-eyebrow reveal" data-i18n="kernel.own.eyebrow">Who owns what</p>
+          <h2 class="section-title reveal" data-i18n="kernel.own.title">Three roles, kept apart.</h2>
+        </div>
+        <p class="section-desc reveal" data-i18n="kernel.own.desc">An agent that grades its own work will pass it. So it doesn't get to.</p>
+      </header>
+      <div class="bento k-own">
+        <div class="bento-cell reveal">
+          <span class="k-actor k-you" data-i18n="kernel.actor.you">You</span>
+          <h3 data-i18n="kernel.own.you.title">Decide</h3>
+          <ul>
+            <li data-i18n="kernel.own.you.1">The goal, and the route if you disagree with it</li>
+            <li data-i18n="kernel.own.you.2">Which checks count, by activating a Verification Profile</li>
+            <li data-i18n="kernel.own.you.3">Waivers, approvals, and every policy change</li>
+          </ul>
+        </div>
+        <div class="bento-cell reveal">
+          <span class="k-actor k-host" data-i18n="kernel.actor.host">Host</span>
+          <h3 data-i18n="kernel.own.host.title">Enforces</h3>
+          <ul>
+            <li data-i18n="kernel.own.host.1">The Mission's state and every transition</li>
+            <li data-i18n="kernel.own.host.2">Running checks and recording evidence</li>
+            <li data-i18n="kernel.own.host.3">Whether the Mission may be called complete</li>
+          </ul>
+        </div>
+        <div class="bento-cell reveal">
+          <span class="k-actor k-agent" data-i18n="kernel.actor.agent">Agent</span>
+          <h3 data-i18n="kernel.own.agent.title">Works</h3>
+          <ul>
+            <li data-i18n="kernel.own.agent.1">Reads, plans, writes, and runs commands</li>
+            <li data-i18n="kernel.own.agent.2">Follows the current phase's instructions</li>
+            <li data-i18n="kernel.own.agent.3">Cannot change the contract or certify its own result</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="benchmark" hidden>
+      <header class="section-head">
+        <div>
+          <p class="section-eyebrow reveal" data-i18n="kernel.bench.eyebrow">Benchmark</p>
+          <h2 class="section-title reveal" data-i18n="kernel.bench.title">Same tasks, same models, with and without the kernel.</h2>
+        </div>
+        <p class="section-desc reveal" data-i18n="kernel.bench.desc">Each tool gets the same task and repository. A hidden test suite, not the tool, decides whether the task is done.</p>
+      </header>
+      <div class="flow-cell k-cell">
+        <div class="bm">
+          <p class="bm-sample" data-benchmark-sample hidden data-i18n="kernel.bench.sample">Sample data — not measured</p>
+          <div class="bm-chart" data-benchmark-chart></div>
+          <p class="bm-meta" data-benchmark-meta></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="around">
+      <header class="section-head">
+        <div>
+          <p class="section-eyebrow reveal" data-i18n="kernel.around.eyebrow">Around the loop</p>
+          <h2 class="section-title reveal" data-i18n="kernel.around.title">Four more things the kernel makes possible.</h2>
+        </div>
+        <p class="section-desc reveal" data-i18n="kernel.around.desc">Each one is a small loop of its own, run by the host.</p>
+      </header>
+      <div class="bento k-around">
+        <article class="bento-cell reveal">
+          <h3 data-i18n="kernel.a1.title">Pause and resume</h3>
+          <p data-i18n="kernel.a1.body">A pause, a usage limit, a backend switch, or closing the app all save what was true at that moment. Before anything continues, the host compares it with what is true now.</p>
+          <ol class="k-mini" style="--k-n:4">
+            <li data-i18n="kernel.a1.m1">Capture</li><li data-i18n="kernel.a1.m2">Compare</li><li data-i18n="kernel.a1.m3">Brief</li><li data-i18n="kernel.a1.m4">Resume</li>
+          </ol>
+          <p class="k-note" data-i18n="kernel.a1.note">A changed branch or a missing worktree blocks Resume until you confirm it.</p>
+        </article>
+        <article class="bento-cell reveal">
+          <h3 data-i18n="kernel.a2.title">Impact</h3>
+          <p data-i18n="kernel.a2.body">Finds what a change can affect outside its diff — importers, commands the frontend calls, code that reads a changed table — and turns it into checks to run.</p>
+          <ol class="k-mini" style="--k-n:4">
+            <li data-i18n="kernel.a2.m1">Change</li><li data-i18n="kernel.a2.m2">Dependents</li><li data-i18n="kernel.a2.m3">Unknowns</li><li data-i18n="kernel.a2.m4">Claims</li>
+          </ol>
+          <p class="k-note" data-i18n="kernel.a2.note">What it cannot follow is listed as unknown, never left out. It edits nothing.</p>
+        </article>
+        <article class="bento-cell reveal">
+          <h3 data-i18n="kernel.a3.title">Pull request watch</h3>
+          <p data-i18n="kernel.a3.body">Follows a pull request on GitHub or GitLab and tells you what still stands between it and merge-ready: checks, conflicts, review comments, approvals, and the Mission's own evidence on that commit.</p>
+          <ol class="k-mini" style="--k-n:5">
+            <li data-i18n="kernel.a3.m1">Observe</li><li data-i18n="kernel.a3.m2">Classify</li><li data-i18n="kernel.a3.m3">Act</li><li data-i18n="kernel.a3.m4">Verify</li><li data-i18n="kernel.a3.m5">Wait</li>
+          </ol>
+          <p class="k-note" data-i18n="kernel.a3.note">It replies or re-runs a check only if you allowed it, once, after showing you. It never merges.</p>
+        </article>
+        <article class="bento-cell reveal">
+          <h3 data-i18n="kernel.a4.title">Workflow Lab</h3>
+          <p data-i18n="kernel.a4.body">Run a routing candidate against a control on a fixed set of labelled cases, compare them segment by segment, and propose a policy change from the result.</p>
+          <ol class="k-mini" style="--k-n:4">
+            <li data-i18n="kernel.a4.m1">Run</li><li data-i18n="kernel.a4.m2">Compare</li><li data-i18n="kernel.a4.m3">Propose</li><li data-i18n="kernel.a4.m4">Approve</li>
+          </ol>
+          <p class="k-note" data-i18n="kernel.a4.note">A proposal changes nothing until a person approves it. Too few cases is never a pass.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="project-files">
+      <header class="section-head">
+        <div>
+          <p class="section-eyebrow reveal" data-i18n="kernel.files.eyebrow">In your repository</p>
+          <h2 class="section-title reveal" data-i18n="kernel.files.title">Two files make a project its own.</h2>
+        </div>
+        <p class="section-desc reveal" data-i18n="kernel.files.desc">Create them from Projects with one click, or let Onboarding add them.</p>
+      </header>
+      <div class="bento k-files">
+        <div class="bento-cell reveal">
+          <h3><code>.thanatos/verification.yaml</code></h3>
+          <p data-i18n="kernel.files.f1">The checks a Mission must pass. A starter is built from the test, lint, and build commands the project already has. Nothing is in force until you activate that exact version.</p>
+        </div>
+        <div class="bento-cell reveal">
+          <h3><code>.thanatos/playbooks/*.yaml</code></h3>
+          <p data-i18n="kernel.files.f2">Adjust a built-in playbook for this project by adding steps or stricter gates. A file is used only after you approve it, and editing it afterwards needs approval again.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="cta" class="cta">
+      <div class="cta-text reveal">
+        <h2 data-i18n="kernel.cta.title">Proof, not a promise.</h2>
+        <p data-i18n="kernel.cta.sub">The agent says it is done. The kernel checks.</p>
+      </div>
+      <div class="cta-actions reveal">
+        <a class="btn btn-primary" href="#lifecycle" data-i18n="kernel.cta.btn1">Replay the lifecycle</a>
+        <a class="btn btn-ghost" href="index.html" data-i18n="kernel.cta.btn2">Back to overview</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="nav-logo"><span class="nav-mark" aria-hidden="true">›</span>THANATOS</span>
+        <span class="footer-copy">© <span data-current-year>2026</span> Thanapat Maliphan</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="i18n.js"></script>
+  <script src="script.js"></script>
+  <script src="kernel.js"></script>
+  <script src="benchmark-data.js"></script>
+  <script src="benchmark.js"></script>
+</body>
+</html>
