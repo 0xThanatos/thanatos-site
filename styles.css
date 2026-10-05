@@ -106,6 +106,27 @@ code {
   transition: right var(--dur-hover) var(--ease-out-expo);
 }
 .nav-links a:hover::after, .nav-links a.nav-active::after { right: 0; }
+.nav-toggle {
+  display: none;
+  width: 38px;
+  height: 38px;
+  padding: 9px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 9px;
+  background: rgb(255 255 255 / 0.03);
+  color: var(--text);
+  cursor: pointer;
+}
+.nav-toggle span {
+  display: block;
+  height: 1px;
+  margin-block: 4px;
+  background: currentColor;
+  transition: transform var(--dur-hover), opacity var(--dur-hover);
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
 @media (max-width: 400px) {
   .nav-links { gap: 16px; font-size: 13px; }
 }
@@ -134,8 +155,27 @@ code {
 .lang-switch button:hover { color: var(--text); }
 .lang-switch button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); font-weight: 600; }
 @media (max-width: 560px) {
-  .nav-links { display: none; }
-  .lang-switch { margin-left: auto; }
+  .nav-inner { position: relative; }
+  .nav-toggle { display: block; margin-left: auto; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px var(--cell-pad) 12px;
+    border: 1px solid var(--border);
+    border-top: 0;
+    background: color-mix(in srgb, var(--bg) 96%, transparent);
+    backdrop-filter: blur(18px) saturate(140%);
+  }
+  .nav-links.nav-open { display: flex; }
+  .nav-links a { min-height: 44px; display: flex; align-items: center; }
+  .nav-links a::after { bottom: 4px; }
+  .lang-switch { margin-left: 8px; }
 }
 
 /* Thai: the tight Latin tracking and line-height crush Thai stacked vowels. */

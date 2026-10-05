@@ -11,6 +11,7 @@ window.THANATOS_I18N = {
     "nav.features": "ฟีเจอร์",
     "nav.arch": "สถาปัตยกรรม",
     "nav.kernel": "Kernel",
+    "nav.menu": "เปิดเมนูนำทาง",
 
     "hero.eyebrow": "Agentic Command Platform",
     "hero.lead": "สั่งงานทีม AI&nbsp;Agent<br>จาก",

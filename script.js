@@ -191,6 +191,29 @@ function initCurrentYear() {
   document.querySelectorAll("[data-current-year]").forEach((el) => { el.textContent = year; });
 }
 
+function initMobileNav() {
+  const toggle = document.querySelector(".nav-toggle");
+  const links = document.querySelector(".nav-links");
+  if (!toggle || !links) return;
+
+  const setOpen = (open, returnFocus = false) => {
+    links.classList.toggle("nav-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    if (!open && returnFocus) toggle.focus();
+  };
+
+  toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+  links.addEventListener("click", (event) => {
+    if (event.target.closest("a")) setOpen(false);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") setOpen(false, true);
+  });
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 560) setOpen(false);
+  });
+}
+
 function initScrollSpy() {
   const sections = ["why-not-cli", "features", "compare", "architecture"].map((id) => document.getElementById(id));
   const links = document.querySelectorAll(".nav-links a[href^='#']");
@@ -223,7 +246,7 @@ function initScrollReveal() {
 
 // The script sits at the end of <body>, so the DOM is ready: apply the
 // language immediately to avoid an English flash for Thai visitors.
-for (const init of [initCurrentYear, typewriter.init, i18n.init, initScrollSpy, initScrollReveal]) {
+for (const init of [initCurrentYear, typewriter.init, i18n.init, initMobileNav, initScrollSpy, initScrollReveal]) {
   try {
     init();
   } catch (e) {
